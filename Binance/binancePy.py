@@ -12,62 +12,63 @@ from binance.client import Client
 #export binance_api="your_api_key_here"
 #export binance_secret="your_api_secret_here"
 
-# INIT
-api_key=os.environ.get('binance_api')
-api_secret=os.environ.get('binance_secret')
-client=Client(api_key, api_secret)
+class Binancer:
+    
+    api_key=os.environ.get('binance_api')
+    api_secret=os.environ.get('binance_secret')
+    client=Client(api_key, api_secret)
 
+    # INIT
+    def __init__(self):
+        api_key=os.environ.get('binance_api')
+        api_secret=os.environ.get('binance_secret')
+        client=Client(api_key, api_secret)
+       
+##################################################################################
 # GET CONNECTION INFOS
-## get server time
-def getServerTime():
-    time_res=client.get_server_time()
-    return time_res
-## get system status
-def getSystemStatus():
-    status=client.get_system_status()
-    return status
-## get exchange info
-def getExchangeInfo():
-    info = client.get_exchange_info()
-    return info
-## get symbol info
-def getSymbolInfo (sym):
-    symbolInfo=client.get_symbol_info(sym)
-    return symbolInfo
+    ## get server time
+    def getServerTime(self):
+        time_res=self.client.get_server_time()
+        return time_res
+    ## get system status
+    def getSystemStatus(self):
+        status=self.client.get_system_status()
+        return status
+    ## get exchange info
+    def getExchangeInfo(self):
+        info = self.client.get_exchange_info()
+        return info
+    ## get symbol info
+    def getSymbolInfo (self,sym):
+        symbolInfo=self.client.get_symbol_info(sym)
+        return symbolInfo
 
+
+##################################################################################
 # ACCOUNT INFOS
-## get account info
-def getAccountInfo():
-    info=client.get_account()
-    return account
-## get asset balance
-def getAssetBalance(coin):
-    balance=client.get_asset_balance(asset='BTC')
-    return asset
+    ## get account info -> return dict
+    def getAccountInfo(self):
+        accountInfo=self.client.get_account()
+        return accountInfo
+    ## get asset balance
+    def getAssetBalance(self,coin):
+        balance="asset='"+coin+"'"
+        print(balance)
+        assetBalance=self.client.get_asset_balance(balance)
+        return assetBalance
 
-
-
-
-# GET TICKERS
-def getSymbolTicker(*symbol):
-    ticker=client.get_ticker(symbol)
-    print(ticker)
-    return ticker
+##################################################################################
+# GET PRICES
+    def getSymbolTicker(sym):
+        ticker=self.client.get_ticker(sym)
+        return ticker
 
 
 # TRADING
-## fetch all orders
-def fetchAllOrders(coin):
-    orders=client.get_all_orders(symbol=coin, limit=10)
-    return orders
+    ## fetch all orders
+    def fetchAllOrders(self,coin):
+        orders=self.client.get_all_orders(symbol=coin, limit=10)
+        return orders
 
 
 
-
-
-
-
-# MAIN
-print(getSystemStatus())
-
-getSymbolTicker("BTCUSDT")
