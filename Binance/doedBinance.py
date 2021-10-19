@@ -1,16 +1,11 @@
-import binancePY
-from binancePY import Binancer
+from binance import Client, ThreadedWebsocketManager, ThreadedDepthCacheManager
+client = Client(api_key, api_secret)
 
+# fetch list of withdrawals
+withdraws = client.get_withdraw_history()
 
+# fetch list of ETH withdrawals
+eth_withdraws = client.get_withdraw_history(coin='ETH')
 
-# MAIN
-trader=Binancer()
-
-# Simple function test + examples
-#print(trader.getServerTime())
-#print(trader.getSystemStatus())
-#print(trader.getExchangeInfo())
-#print(trader.getSymbolInfo("BTCUSDT"))
-#print(trader.getAccountInfo())
-print(trader.getAssetBalance("ETH"))
-print(trader.getSymbolTicker("ETH"))
+# get all symbol prices
+prices = client.get_all_tickers()
